@@ -10,6 +10,7 @@
     <version>${revision}</version>
     <modules>
         <module>persistence</module>
+        <module>service</module>
     </modules>
 
     <properties>
