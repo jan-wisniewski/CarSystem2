@@ -1,6 +1,6 @@
-package com.app.persistence.model.converter.generic;
+package com.app.persistence.converter.generic;
 
-import com.app.persistence.model.exception.JsonConversionException;
+import com.app.persistence.exception.JsonConversionException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

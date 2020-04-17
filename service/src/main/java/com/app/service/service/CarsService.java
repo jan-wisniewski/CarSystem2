@@ -1,8 +1,8 @@
 package com.app.service.service;
 
 import com.app.persistence.model.Car;
-import com.app.persistence.model.converter.JsonCarsConverter;
-import com.app.persistence.model.enums.Color;
+import com.app.persistence.converter.JsonCarsConverter;
+import com.app.persistence.enums.Color;
 import com.app.service.enums.SortCriterion;
 import com.app.service.exception.CarsServiceException;
 import com.app.service.validation.CarValidator;
@@ -31,12 +31,12 @@ public class CarsService {
                 .stream()
                 .filter(car -> {
                     var carsValidator = new CarValidator();
-                    var erros = carsValidator.validate(car);
+                    var errors = carsValidator.validate(car);
 
                     if (carsValidator.hasErrors()) {
                         System.out.println("---------------------- Validation error -----------------");
                         System.out.println("---------------------- Car no. " + counter.get());
-                        System.out.println(erros
+                        System.out.println(errors
                                 .entrySet()
                                 .stream()
                                 .map(e -> e.getKey() + ": " + e.getValue())
@@ -156,11 +156,36 @@ public class CarsService {
                 .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
-    public Map<String, Long> componentsInCars() {
+    public Map<String, List<Car>> componentsInCars() {
         return cars
                 .stream()
                 .flatMap(car -> car.getComponents().stream())
-                .collect(Collectors.groupingBy(c -> c,
-                        Collectors.counting()));
+                .collect(Collectors.toMap(c -> c,
+                        c -> cars.stream()
+                                .filter(car -> car.getComponents().contains(c))
+                                .collect(Collectors.toList()),
+                        (s1,s2) -> s1,
+                        LinkedHashMap::new)
+                );
+    }
+
+    public List<Car> sortComponents() {
+        return cars
+                .stream()
+                .peek(car -> car.setComponents(car.getComponents()
+                        .stream()
+                        .sorted()
+                        .collect(Collectors.toCollection(LinkedHashSet::new)))
+                )
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public String toString() {
+        return cars.stream()
+                .map(c -> c.getModel() + " ($" + c.getPrice() +
+                        ", mileage: " + c.getMileage() +
+                        ", components: " + c.getComponents())
+                .collect(Collectors.joining("\n"));
     }
 }

@@ -1,7 +1,7 @@
-package com.app.persistence.model.converter;
+package com.app.persistence.converter;
 
+import com.app.persistence.converter.generic.JsonConverter;
 import com.app.persistence.model.Car;
-import com.app.persistence.model.converter.generic.JsonConverter;
 
 import java.util.List;
 

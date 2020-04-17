@@ -1,6 +1,6 @@
 package com.app.persistence.model;
 
-import com.app.persistence.model.enums.Color;
+import com.app.persistence.enums.Color;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
