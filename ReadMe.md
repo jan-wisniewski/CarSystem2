@@ -41,4 +41,4 @@ Then copy resources folder and app.jar file from target folder in your ui module
 `java -jar --enable-preview app.jar`
 
 ## Author
-Jan Wiśniewski2
+Jan Wiśniewski
